@@ -75,6 +75,15 @@
   .ikigai{display:grid;gap:8px;margin:10px 0}
   .ikigai div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px}
   .ikigai b{color:var(--acc)}
+  .kat-cat{margin-top:18px}
+  .kat-cat h4{font-size:16px;color:var(--acc2);margin-bottom:4px}
+  .kat-cat .catdesc{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .kat-job{background:var(--card2);border-radius:8px;padding:9px 12px;margin:6px 0;font-size:13.5px}
+  .kat-job b{color:var(--txt)}
+  .tg-mb{color:var(--acc);font-size:11px;font-weight:700;margin-left:4px}
+  .tg-neu{color:var(--c7);font-size:11px;font-weight:700;margin-left:4px}
+  .selbst-step{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;font-size:13.5px}
+  .selbst-step b{color:var(--acc)}
   @media print{
     body{background:#fff;color:#000;padding:0}
     .panel,.q,.res-cluster,.job,.infobox,.stylerow{border-color:#bbb;background:#fff}
@@ -104,6 +113,7 @@
     <button class="bigbtn" style="margin-top:18px" onclick="startQuiz()">Los geht es</button>
     <button class="linkbtn" style="display:block;margin:14px auto 0" onclick="toggleParent()">Info fuer Eltern</button>
     <button class="linkbtn" style="display:block;margin:10px auto 0" onclick="toggleBerufung()">Wie finde ich meine Berufung?</button>
+    <button class="linkbtn" style="display:block;margin:10px auto 0" onclick="toggleKatalog()">Alle Zukunfts-Jobs ansehen (grosse Liste)</button>
   </div>
 
   <div id="quiz" class="hidden">
@@ -157,6 +167,7 @@
       <h3 style="font-size:18px;margin-bottom:4px">Aus Interesse wird Berufung</h3>
       <div class="secsub">Der Test zeigt die Richtung. Wie du daraus etwas machst, das du liebst - statt nur arbeiten zu gehen:</div>
       <button class="bigbtn" style="background:var(--c7)" onclick="toggleBerufung()">Wie ich meine Berufung finde</button>
+      <button class="bigbtn ghost" style="margin-top:10px" onclick="toggleKatalog()">Grosse Job-Liste durchstoebern</button>
     </div>
     <div class="panel" style="text-align:center">
       <button class="bigbtn" onclick="window.print()">Ergebnis speichern / drucken (PDF)</button>
@@ -229,6 +240,165 @@
 
     <div style="font-size:13px;color:var(--muted);margin-top:6px">Merksatz: Such nicht den perfekten Plan. Sammle Erfahrungen, bis das Muster sichtbar wird. Die Richtung entsteht im Gehen.</div>
     <button class="bigbtn ghost" style="margin-top:14px" onclick="toggleBerufung()">Schliessen</button>
+  </div>
+
+  <div id="katalog" class="panel hidden" style="border-color:var(--acc2)">
+    <h3 style="font-size:22px;margin-bottom:6px">Das grosse Job-Lexikon - zum Stoebern</h3>
+    <div class="secsub">Mit 13 kennt man vielleicht 20 Berufe. Es gibt hunderte. Diese Liste ist zum Durchscrollen, nicht zum Auswendiglernen. Wenn irgendwo ein "oh, DAS klingt geil" aufpoppt - haengenbleiben. Vielleicht ist da dein Sofort-Match.</div>
+    <div class="secsub" style="margin-top:8px"><span class="tg-mb">gesucht</span> = in AT Mangelberuf (sehr sichere Jobs) &nbsp; <span class="tg-neu">neu</span> = aufstrebendes Zukunftsfeld</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:6px">Und falls du das als Erwachsener liest und denkst "zu spaet": ist es nicht. Umsteigen ist schwerer als starten - aber jeder Tag ist Tag eins.</div>
+
+    <div class="kat-cat"><h4>1. Gesundheit &amp; Pflege</h4><div class="catdesc">Mit und an Menschen - kaum durch Maschinen ersetzbar, immer gebraucht.</div>
+      <div class="kat-job"><b>Pflegefachassistenz / Dipl. Krankenpflege</b><span class="tg-mb">gesucht</span><br>Patienten versorgen, Behandlung mitplanen, Angehoerige begleiten.</div>
+      <div class="kat-job"><b>Physiotherapie</b><span class="tg-mb">gesucht</span><br>Menschen nach Unfall oder OP wieder in Bewegung bringen.</div>
+      <div class="kat-job"><b>Ergotherapie</b><span class="tg-mb">gesucht</span><br>Menschen helfen, den Alltag wieder selbst zu meistern.</div>
+      <div class="kat-job"><b>Logopaedie</b><span class="tg-mb">gesucht</span><br>Sprach- und Schluckstoerungen behandeln, bei Kindern und Erwachsenen.</div>
+      <div class="kat-job"><b>Hebamme</b><br>Geburten begleiten und Familien am Start unterstuetzen.</div>
+      <div class="kat-job"><b>Rettungs- / Notfallsanitaeter:in</b><br>Erstversorgung im Notfall - Tempo, Nerven, Verantwortung.</div>
+      <div class="kat-job"><b>Diaetolog:in</b><br>Ernaehrung als Medizin: Therapieplaene bei Krankheiten.</div>
+      <div class="kat-job"><b>Radiologietechnolog:in</b><br>Roentgen, MRT, CT bedienen und die Bilder erstellen.</div>
+    </div>
+
+    <div class="kat-cat"><h4>2. Laborhandwerk &amp; Technik am Koerper</h4><div class="catdesc">Praezisions-Handwerk im Labor - ruhige Haende, sichtbares Ergebnis.</div>
+      <div class="kat-job"><b>Zahntechniker:in</b><span class="tg-mb">gesucht</span><br>Zahnersatz, Kronen, Spangen aus Keramik und Metall millimetergenau bauen.</div>
+      <div class="kat-job"><b>Orthopaedietechniker:in</b><br>Prothesen und Hilfsmittel anfertigen, die Menschen wieder gehen lassen.</div>
+      <div class="kat-job"><b>Orthopaedieschuhmacher:in</b><br>Massschuhe und Einlagen fuer Fuesse, denen Standard nicht passt.</div>
+      <div class="kat-job"><b>Hoerakustiker:in</b><br>Hoergeraete anpassen und einstellen - Technik trifft Mensch.</div>
+      <div class="kat-job"><b>Augenoptiker:in</b><span class="tg-mb">gesucht</span><br>Brillen und Kontaktlinsen anpassen, Sehtests machen.</div>
+      <div class="kat-job"><b>Zahnaerztliche / Ordinationsassistenz</b><br>Behandlungen vorbereiten, die Praxis am Laufen halten.</div>
+      <div class="kat-job"><b>Pharmazeutisch-kaufm. Assistenz (PKA)</b><br>In der Apotheke Medikamente verwalten und beraten.</div>
+    </div>
+
+    <div class="kat-cat"><h4>3. Longevity, Biotech &amp; Labor-Forschung</h4><div class="catdesc">Die heissesten Zukunftsmaerkte - Leben verlaengern, Krankheiten knacken.</div>
+      <div class="kat-job"><b>Biomedizinische Analytik (BMA)</b><span class="tg-mb">gesucht</span><br>Im Labor Blut und Gewebe analysieren, Krankheiten sichtbar machen.</div>
+      <div class="kat-job"><b>Biotechnolog:in</b><span class="tg-neu">neu</span><br>Mit Zellen, Enzymen, Bakterien neue Medikamente und Materialien entwickeln.</div>
+      <div class="kat-job"><b>Longevity- / Altersforschung</b><span class="tg-neu">neu</span><br>Erforschen, wie Menschen laenger gesund bleiben - Milliardenmarkt im Aufbau.</div>
+      <div class="kat-job"><b>Genetik / Bioinformatik</b><span class="tg-neu">neu</span><br>Erbgut-Daten am Computer auswerten: Biologie trifft Programmieren.</div>
+      <div class="kat-job"><b>Pharmaforschung / Labortechnik</b><br>Wirkstoffe testen und entwickeln, in Chemie und Biologie.</div>
+      <div class="kat-job"><b>Lebensmitteltechnolog:in</b><br>Lebensmittel sicherer, haltbarer und gesuender machen.</div>
+      <div class="kat-job"><b>Medizintechnik-Entwicklung</b><span class="tg-neu">neu</span><br>Geraete bauen, die Diagnose und Therapie ueberhaupt moeglich machen.</div>
+    </div>
+
+    <div class="kat-cat"><h4>4. IT, Daten &amp; KI</h4><div class="catdesc">Logik-Koepfe gesucht. Tipp: KI als Werkzeug beherrschen, nicht fuerchten.</div>
+      <div class="kat-job"><b>Softwareentwicklung</b><span class="tg-mb">gesucht</span><br>Programme und Apps bauen, die Millionen nutzen.</div>
+      <div class="kat-job"><b>Cybersecurity</b><span class="tg-mb">gesucht</span><br>Systeme vor Hackern schuetzen - in AT extrem gesucht.</div>
+      <div class="kat-job"><b>Data Science / Datenanalyse</b><span class="tg-mb">gesucht</span><br>Aus Daten Muster und Entscheidungen herausziehen.</div>
+      <div class="kat-job"><b>KI- / Machine-Learning-Engineer</b><span class="tg-neu">neu</span><br>KI-Modelle bauen, trainieren und in Produkte einbauen.</div>
+      <div class="kat-job"><b>Cloud- / DevOps-Engineer</b><br>Die unsichtbare Technik hinter Apps am Laufen halten.</div>
+      <div class="kat-job"><b>Game-Developer</b><br>Spiele programmieren und ganze Welten bauen.</div>
+      <div class="kat-job"><b>Robotik-Programmierung</b><span class="tg-neu">neu</span><br>Robotern beibringen, was sie tun sollen.</div>
+      <div class="kat-job"><b>KI-Workflow- / Prompt-Designer:in</b><span class="tg-neu">neu</span><br>Firmen zeigen, wie sie KI sinnvoll und sicher einsetzen.</div>
+    </div>
+
+    <div class="kat-cat"><h4>5. Technik, Maschinen &amp; Energie</h4><div class="catdesc">Die Energiewende braucht hunderttausende - Jobgarantie bis weit ueber 2040.</div>
+      <div class="kat-job"><b>Mechatroniker:in</b><span class="tg-mb">gesucht</span><br>Technik + Elektronik + IT: Maschinen und Roboter bauen und warten.</div>
+      <div class="kat-job"><b>Elektrotechniker:in</b><span class="tg-mb">gesucht</span><br>Strom, Steuerungen, Anlagen - das Rueckgrat von allem.</div>
+      <div class="kat-job"><b>Automatisierungstechnik (SPS)</b><br>Maschinen so programmieren, dass sie selbststaendig laufen.</div>
+      <div class="kat-job"><b>Photovoltaik- / Solartechniker:in</b><span class="tg-neu">neu</span><br>Solaranlagen planen und montieren - Boom-Markt.</div>
+      <div class="kat-job"><b>Waermepumpen- / Heizungstechniker:in</b><span class="tg-mb">gesucht</span><br>Moderne Heizsysteme einbauen, riesige Nachfrage.</div>
+      <div class="kat-job"><b>Windkrafttechniker:in</b><span class="tg-neu">neu</span><br>Windraeder warten - oft in luftiger Hoehe.</div>
+      <div class="kat-job"><b>E-Mobilitaet / Ladeinfrastruktur</b><span class="tg-neu">neu</span><br>Ladestationen und E-Auto-Technik aufbauen.</div>
+      <div class="kat-job"><b>Wasserstofftechnik</b><span class="tg-neu">neu</span><br>Die Energie-Technologie von morgen mitbauen.</div>
+      <div class="kat-job"><b>CNC- / Zerspanungstechnik</b><span class="tg-mb">gesucht</span><br>Metallteile maschinell millimetergenau fertigen.</div>
+      <div class="kat-job"><b>Schweisstechnik</b><span class="tg-mb">gesucht</span><br>Metall verbinden - vom Auto bis zur Windkraftanlage.</div>
+    </div>
+
+    <div class="kat-cat"><h4>6. Bauen, Wohnen &amp; Handwerk</h4><div class="catdesc">Handwerk wird nicht ausgelagert und nicht wegdigitalisiert.</div>
+      <div class="kat-job"><b>Installateur:in (Heizung/Klima/Sanitaer)</b><span class="tg-mb">gesucht</span><br>Wasser, Waerme, Baeder - immer gebraucht, gut bezahlt.</div>
+      <div class="kat-job"><b>Elektroinstallation</b><span class="tg-mb">gesucht</span><br>Strom ins Gebaeude bringen, Smart-Home inklusive.</div>
+      <div class="kat-job"><b>Dachdecker:in</b><span class="tg-mb">gesucht</span><br>Daecher, die jedem Wetter trotzen - verdient oft mehr als gedacht.</div>
+      <div class="kat-job"><b>Zimmerer / Holzbautechnik</b><span class="tg-mb">gesucht</span><br>Moderne Holzhaeuser bauen - nachhaltiger Bau-Trend.</div>
+      <div class="kat-job"><b>Tischler:in</b><br>Moebel und Innenausbau, von Hand und per CNC.</div>
+      <div class="kat-job"><b>Maurer / Beton- / Tiefbau</b><span class="tg-mb">gesucht</span><br>Das Geruest von Strassen, Haeusern, Infrastruktur.</div>
+      <div class="kat-job"><b>Smart-Home- / Gebaeudetechniker:in</b><span class="tg-neu">neu</span><br>Haeuser intelligent steuern: Licht, Waerme, Sicherheit.</div>
+      <div class="kat-job"><b>Spengler:in</b><span class="tg-mb">gesucht</span><br>Dach- und Metallarbeiten praezise umsetzen.</div>
+    </div>
+
+    <div class="kat-cat"><h4>7. Natur, Tiere &amp; Lebensmittel</h4><div class="catdesc">Drinnen zu eng? Hier ist das Leben draussen und am Lebendigen.</div>
+      <div class="kat-job"><b>Landwirt:in / AgriTech</b><span class="tg-neu">neu</span><br>Lebensmittel produzieren - heute mit Sensoren, Drohnen, Daten.</div>
+      <div class="kat-job"><b>Forstwirt:in</b><br>Wald pflegen und nutzen - mitten im Klimathema.</div>
+      <div class="kat-job"><b>Gaertner:in / Landschaftsbau</b><br>Gaerten und Gruenraeume gestalten und pflegen.</div>
+      <div class="kat-job"><b>Tierpfleger:in / Tierarzt-Assistenz</b><br>Tiere versorgen, betreuen, gesund halten.</div>
+      <div class="kat-job"><b>Imker:in</b><br>Bienen halten - klein, aber riesig fuers Oekosystem.</div>
+      <div class="kat-job"><b>Baecker:in / Konditor:in</b><br>Handwerkliches Backen - oft mit eigener Baeckerei als Ziel.</div>
+      <div class="kat-job"><b>Koch / Koechin</b><span class="tg-mb">gesucht</span><br>Vom Restaurant bis zur Pflegekueche stark gesucht.</div>
+      <div class="kat-job"><b>Brauer:in / Winzer:in</b><br>Bier und Wein herstellen - Handwerk trifft Wissenschaft.</div>
+      <div class="kat-job"><b>Aquakultur</b><span class="tg-neu">neu</span><br>Fische und Algen nachhaltig zuechten.</div>
+    </div>
+
+    <div class="kat-cat"><h4>8. Menschen, Bildung &amp; Soziales</h4><div class="catdesc">Wenn dich Menschen mehr interessieren als Maschinen.</div>
+      <div class="kat-job"><b>Elementarpaedagog:in (Kindergarten)</b><span class="tg-mb">gesucht</span><br>Kinder von 0-6 foerdern - akademisch anerkannt, stark gesucht.</div>
+      <div class="kat-job"><b>Lehrer:in</b><br>Wissen vermitteln, begleiten, motivieren.</div>
+      <div class="kat-job"><b>Sozialarbeiter:in / Sozialpaedagog:in</b><br>Menschen in schwierigen Lagen begleiten und staerken.</div>
+      <div class="kat-job"><b>Psycholog:in / Psychotherapeut:in</b><br>Seelische Gesundheit - Gespraeche, Diagnostik, Begleitung.</div>
+      <div class="kat-job"><b>Coach / Trainer:in</b><br>Menschen helfen, in etwas besser zu werden.</div>
+      <div class="kat-job"><b>Pflege- / Berufspaedagogik</b><br>Die naechste Generation Fachkraefte ausbilden.</div>
+    </div>
+
+    <div class="kat-cat"><h4>9. Kreativ, Medien &amp; Design</h4><div class="catdesc">Ideen, Bilder, Geschichten. Wer KI-Tools nutzt, gewinnt hier.</div>
+      <div class="kat-job"><b>Mediendesign / UX-UI</b><br>Apps und Websites schoen UND einfach bedienbar machen.</div>
+      <div class="kat-job"><b>3D / Animation / Game-Art</b><br>Digitale Welten, Figuren und Effekte erschaffen.</div>
+      <div class="kat-job"><b>Architektur / Innenarchitektur</b><br>Raeume und Gebaeude entwerfen - Technik trifft Aesthetik.</div>
+      <div class="kat-job"><b>Industriedesign</b><br>Produkte gestalten, die gut aussehen und funktionieren.</div>
+      <div class="kat-job"><b>Content Creation / Social Media</b><span class="tg-neu">neu</span><br>Videos, Reichweite und Marken aufbauen.</div>
+      <div class="kat-job"><b>Foto / Video / Audio</b><br>Geschichten in Bild und Ton erzaehlen.</div>
+    </div>
+
+    <div class="kat-cat"><h4>10. Wirtschaft, Handel &amp; Geld</h4><div class="catdesc">Wer gern plant, ordnet, verhandelt oder mit Zahlen umgeht.</div>
+      <div class="kat-job"><b>Steuer- / Lohnverrechnung</b><span class="tg-mb">gesucht</span><br>Zahlen, Gehaelter, Abrechnung - verlaesslich gesucht.</div>
+      <div class="kat-job"><b>Controlling / Buchhaltung</b><br>Den finanziellen Ueberblick einer Firma behalten.</div>
+      <div class="kat-job"><b>Logistik / Supply Chain</b><br>Warenstroeme weltweit planen und steuern.</div>
+      <div class="kat-job"><b>E-Commerce / Online-Handel</b><span class="tg-neu">neu</span><br>Shops und Marken im Netz aufbauen.</div>
+      <div class="kat-job"><b>Marketing / Social-Media-Management</b><br>Aufmerksamkeit erzeugen und Kunden gewinnen.</div>
+      <div class="kat-job"><b>Vertrieb / Sales</b><br>Verkaufen, verhandeln, Beziehungen aufbauen.</div>
+      <div class="kat-job"><b>Projektmanagement</b><br>Komplexe Vorhaben sauber zum Ziel bringen.</div>
+    </div>
+
+    <div class="kat-cat"><h4>11. Neu &amp; ungewoehnlich (aufstrebend)</h4><div class="catdesc">Berufe, die es vor 10 Jahren kaum gab - hier entsteht gerade die Zukunft.</div>
+      <div class="kat-job"><b>Nachhaltigkeits- / ESG-Manager:in</b><span class="tg-neu">neu</span><br>Firmen klimafit, sauber und zukunftssicher machen.</div>
+      <div class="kat-job"><b>Kreislaufwirtschaft / Recyclingtechnik</b><span class="tg-neu">neu</span><br>Aus Muell wieder wertvollen Rohstoff machen.</div>
+      <div class="kat-job"><b>Drohnenpilot:in / Drohnen-Inspektion</b><span class="tg-neu">neu</span><br>Felder, Daecher und Anlagen aus der Luft pruefen.</div>
+      <div class="kat-job"><b>3D-Druck-Spezialist:in</b><span class="tg-neu">neu</span><br>Bauteile und Produkte drucken statt fraesen.</div>
+      <div class="kat-job"><b>Robotik-Servicetechniker:in</b><span class="tg-neu">neu</span><br>Roboter installieren, einstellen und warten.</div>
+      <div class="kat-job"><b>KI-Ethik / KI-Beratung</b><span class="tg-neu">neu</span><br>Dafuer sorgen, dass KI fair und sinnvoll eingesetzt wird.</div>
+      <div class="kat-job"><b>Cybersecurity-Forensik</b><span class="tg-neu">neu</span><br>Digitale Spuren nach Hackerangriffen verfolgen.</div>
+      <div class="kat-job"><b>Raumfahrt / Satellitentechnik</b><span class="tg-neu">neu</span><br>An Satelliten und Weltraumtechnik mitbauen.</div>
+    </div>
+
+    <h3 style="font-size:20px;margin:24px 0 4px;color:var(--c7)">Eigener Boss: dein eigenes Business starten</h3>
+    <div class="secsub">Du musst nicht angestellt sein. Du kannst dein eigenes Ding bauen - klein anfangen, neben Schule oder Lehre. Im Kern bedeutet selbststaendig: du loest ein Problem fuer Leute, die dafuer zahlen. Eigene Zeit, eigenes Risiko, Decke nach oben offen.</div>
+
+    <div style="font-size:14px;margin-top:10px;font-weight:600">Die 7 Bausteine - so entsteht ein Business:</div>
+    <div class="selbst-step"><b>1. Problem / Idee</b> - Was nervt Leute, oder was lieben sie? Genau da steckt Geld.</div>
+    <div class="selbst-step"><b>2. Koennen / Skill</b> - Etwas, das du gut machst: Lasern, Naehen, Programmieren, Reparieren, Backen, Beraten.</div>
+    <div class="selbst-step"><b>3. Erstes Angebot</b> - Eine klare Sache, die du verkaufst, mit Preis. Nicht zehn - eine.</div>
+    <div class="selbst-step"><b>4. Erste Kunden</b> - Die wichtigste Huerde: jemand zahlt zum ersten Mal. Ab da bist du im Spiel.</div>
+    <div class="selbst-step"><b>5. Sichtbarkeit</b> - Leute muessen dich finden: Instagram, Etsy, Mundpropaganda, eine einfache Website.</div>
+    <div class="selbst-step"><b>6. Geld &amp; Ordnung</b> - Einnahmen und Ausgaben aufschreiben, Rechnungen stellen, Steuer im Blick.</div>
+    <div class="selbst-step"><b>7. Wachsen</b> - Mehr verkaufen, Ablaeufe vereinfachen, spaeter Hilfe holen und abgeben.</div>
+
+    <div class="berufung-block" style="border-left:3px solid var(--warn);margin-top:12px">
+      <h4>Was du in Oesterreich brauchst (Ueberblick)</h4>
+      <ul>
+        <li><b>Gewerbeschein</b> - viele Gewerbe sind "frei" und schnell angemeldet (WKO / Bezirkshauptmannschaft).</li>
+        <li><b>Kleinunternehmer-Regelung</b> - bis zu einer Umsatzgrenze keine Umsatzsteuer noetig.</li>
+        <li><b>Steuer</b> - Einkommensteuer auf den Gewinn (ab einer gewissen Hoehe).</li>
+        <li><b>SVS</b> - die Sozialversicherung fuer Selbststaendige.</li>
+      </ul>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">Kostenlose Erstberatung: WKO-Gruenderservice. Fuers Steuer-Setup einmal zum Steuerberater - dann laeuft es. (Steuer- und Rechtsdetails immer mit WKO und Steuerberater pruefen.)</div>
+    </div>
+
+    <div class="berufung-block">
+      <h4>Der Maker-Weg (aus Hobby wird Einkommen)</h4>
+      Beispiel: mit Lasercutter, Sublimation oder 3D-Drucker eigene Produkte herstellen und online verkaufen (Etsy, eigener Shop). Klein starten, echtes Feedback sammeln, verbessern. Ein verkauftes Stueck ist mehr wert als zehn perfekte Plaene.
+    </div>
+
+    <div class="berufung-block">
+      <h4>Mindset</h4>
+      Nicht auf die perfekte Idee warten. Side-Hustle neben der Ausbildung starten. <b>20 Euro erster Umsatz schlagen 0 Euro perfekte Planung.</b> Scheitern ist kein Gegenteil von Erfolg - es ist die Vorstufe. Wer mit 15 etwas Eigenes probiert, hat mit 20 einen Vorsprung, den keine Schule gibt.
+    </div>
+
+    <button class="bigbtn ghost" style="margin-top:14px" onclick="toggleKatalog()">Schliessen</button>
   </div>
 
   <footer>Berufs-Kompass 2026 - Berufe und Mangelberuf-Status nach Fachkraefteverordnung AT 2026. Frei teilbar - laeuft offline in jedem Browser.</footer>
@@ -450,6 +620,7 @@ function showResult(){
 }
 function toggleParent(){ document.getElementById("parent").classList.toggle("hidden"); }
 function toggleBerufung(){ var b=document.getElementById("berufung"); b.classList.toggle("hidden"); if(!b.classList.contains("hidden")) b.scrollIntoView({behavior:"smooth",block:"start"}); }
+function toggleKatalog(){ var b=document.getElementById("katalog"); b.classList.toggle("hidden"); if(!b.classList.contains("hidden")) b.scrollIntoView({behavior:"smooth",block:"start"}); }
 function validateComplete(){
   document.querySelectorAll(".q.missing").forEach(function(e){e.classList.remove("missing");});
   var missQ=[], missW=[];
