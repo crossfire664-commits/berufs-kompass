@@ -66,6 +66,15 @@
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
   .topclusters{font-size:14px;color:var(--muted);margin-bottom:6px}
   .linkbtn{background:none;border:none;color:var(--acc2);text-decoration:underline;cursor:pointer;font-size:14px}
+  .q.missing{border-color:var(--c1)!important;box-shadow:0 0 0 1px var(--c1)}
+  #missingBanner{background:rgba(255,107,138,.12);border:1px solid var(--c1);border-radius:12px;padding:14px;margin:12px 0;font-size:14px}
+  #missingBanner b{color:var(--txt)}
+  .berufung-block{background:var(--card2);border-radius:10px;padding:14px;margin:10px 0;font-size:14px}
+  .berufung-block h4{font-size:15px;margin-bottom:6px;color:var(--txt)}
+  .berufung-block ul{margin:6px 0 0 18px;color:var(--muted)}
+  .ikigai{display:grid;gap:8px;margin:10px 0}
+  .ikigai div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px}
+  .ikigai b{color:var(--acc)}
   @media print{
     body{background:#fff;color:#000;padding:0}
     .panel,.q,.res-cluster,.job,.infobox,.stylerow{border-color:#bbb;background:#fff}
@@ -79,7 +88,7 @@
 <div class="wrap">
   <header>
     <h1>Berufs-Kompass</h1>
-    <div class="sub">Finde heraus, was zu dir passt und was du daraus alles werden kannst.<br>Fuer Oesterreich, Stand 2026.</div>
+    <div class="sub">Finde heraus, was zu dir passt - und was du daraus alles werden kannst.<br>Fuer alle ab ~13. Berufe &amp; Jobsicherheit: Oesterreich, Stand 2026.</div>
   </header>
 
   <div id="start" class="panel intro">
@@ -94,6 +103,7 @@
     <div style="margin-top:10px;font-size:14px;color:var(--muted)">Kein richtig oder falsch. Antworte ehrlich. Dauert etwa 7 Minuten.</div>
     <button class="bigbtn" style="margin-top:18px" onclick="startQuiz()">Los geht es</button>
     <button class="linkbtn" style="display:block;margin:14px auto 0" onclick="toggleParent()">Info fuer Eltern</button>
+    <button class="linkbtn" style="display:block;margin:10px auto 0" onclick="toggleBerufung()">Wie finde ich meine Berufung?</button>
   </div>
 
   <div id="quiz" class="hidden">
@@ -110,7 +120,8 @@
     <div class="secthead">Teil 3 - Was dir wichtig ist</div>
     <div class="secsub">Waehle bis zu 3 - was dir bei einem Beruf am meisten zaehlt.</div>
     <div class="panel"><div class="chips" id="values"></div></div>
-    <button class="bigbtn" id="showResult" disabled onclick="showResult()">Mein Ergebnis anzeigen</button>
+    <div id="missingBanner" class="hidden"></div>
+    <button class="bigbtn" id="showResult" title="Bei Klick zeige ich dir, falls noch etwas fehlt." onclick="showResult()">Mein Ergebnis anzeigen</button>
   </div>
 
   <div id="result" class="hidden">
@@ -142,6 +153,11 @@
         <li><b>Reinschauen:</b> auch in eine Richtung, die nur knapp nicht in den Top 3 ist.</li>
       </ul>
     </div>
+    <div class="panel" style="border-color:var(--c7)">
+      <h3 style="font-size:18px;margin-bottom:4px">Aus Interesse wird Berufung</h3>
+      <div class="secsub">Der Test zeigt die Richtung. Wie du daraus etwas machst, das du liebst - statt nur arbeiten zu gehen:</div>
+      <button class="bigbtn" style="background:var(--c7)" onclick="toggleBerufung()">Wie ich meine Berufung finde</button>
+    </div>
     <div class="panel" style="text-align:center">
       <button class="bigbtn" onclick="window.print()">Ergebnis speichern / drucken (PDF)</button>
       <button class="bigbtn ghost" style="margin-top:10px" onclick="location.reload()">Nochmal starten</button>
@@ -158,6 +174,61 @@
     <div class="infobox"><h4>5. Zeitplan</h4><ul><li>Jetzt: Ergebnisse besprechen, 2-3 Richtungen waehlen.</li><li>Herbst: Tage der offenen Tuer besuchen.</li><li>Nov-Feb: Anmeldefristen der Schulen (HTL teils mit Aufnahmeverfahren).</li><li>Fallback: Lehre mit Matura - verbaut keine spaetere akademische Option.</li></ul></div>
     <div style="font-size:13px;color:var(--muted)">Kein Ersatz fuer AMS-Berufsberatung (kostenlos) - aber ein starker erster Schritt.</div>
     <button class="bigbtn ghost" style="margin-top:14px" onclick="toggleParent()">Schliessen</button>
+  </div>
+
+  <div id="berufung" class="panel hidden" style="border-color:var(--c7)">
+    <h3 style="font-size:22px;margin-bottom:6px">Berufung statt nur Job - der ehrliche Weg</h3>
+    <div class="secsub">Die meisten gehen "arbeiten". Wenige leben das, wofuer sie brennen. Der Unterschied ist kein Glueck - er ist eine Suchmethode. Hier ist sie.</div>
+
+    <div class="berufung-block">
+      <h4>1. Beruf ist nicht gleich Berufung</h4>
+      <b>Beruf</b> = was du kannst und wofuer du bezahlt wirst.<br>
+      <b>Berufung</b> = wo vier Dinge sich treffen. Wenn nur eines fehlt, kippt es: nur Hobby, nur Lohnsklave, Burnout oder brotlose Kunst.
+      <div class="ikigai">
+        <div><b>Was liebst du?</b> Womit vergisst du die Zeit - beim Tun, nicht beim Konsumieren?</div>
+        <div><b>Worin bist du gut?</b> Was faellt DIR leicht, das anderen schwerfaellt?</div>
+        <div><b>Was braucht die Welt?</b> Wofuer kommen Leute zu dir, wofuer wird gezahlt? (Tipp: die gruen markierten Mangelberufe)</div>
+        <div><b>Wovon kannst du leben?</b> Wo gibt es einen Markt - heute und 2035?</div>
+      </div>
+      Der Schnittpunkt aller vier = deine Berufung. Das japanische Wort dafuer: <b>Ikigai</b> - "das, wofuer es sich lohnt aufzustehen".
+    </div>
+
+    <div class="berufung-block">
+      <h4>2. Flow ist die Kompassnadel</h4>
+      Achte auf Momente, in denen die Zeit verschwindet - und du danach aufgeladen statt leer bist. Das ist die ehrlichste Spur zu deinen Staerken.<br>
+      <b>Mach das:</b> Notiere zwei Wochen lang jeden Flow-Moment (egal ob Sport, Reparieren, Zeichnen, Helfen, Tuefteln). Das Muster zeigt die Richtung deutlicher als jeder Test.
+    </div>
+
+    <div class="berufung-block">
+      <h4>3. Staerken ausbauen schlaegt Schwaechen ausbessern</h4>
+      Die Schule belohnt das Ausbessern von Schwaechen. Das Leben belohnt das Ausbauen von Staerken. Niemand wird grossartig in dem, was ihm schwerfaellt.<br>
+      <b>Frag dich:</b> Was kann ich, wofuer mich Leute schon jetzt fragen? Dort liegt der Hebel - nicht bei der Note, die du muehsam von 3 auf 2 schiebst.
+    </div>
+
+    <div class="berufung-block">
+      <h4>4. Nicht warten - bauen (Eigeninitiative)</h4>
+      Niemand "findet" eine Berufung beim Gruebeln. Man stolpert ueber sie beim Tun. Jeder Versuch liefert Daten ueber dich.<br>
+      <b>Probier-Schleifen:</b> kleine eigene Projekte, ein Praktikum, ein Ferialjob, etwas Selbstgemachtes verkaufen, programmieren, jemandem helfen. <b>Fuenf echte Versuche schlagen fuenf Jahre Nachdenken.</b> Wer selbst etwas startet, wird nie nur "Arbeitnehmer" sein.
+    </div>
+
+    <div class="berufung-block">
+      <h4>5. Dein Weg in 5 Schritten</h4>
+      <ul>
+        <li><b>Spuren sammeln</b> - Flow-Momente und Staerken aufschreiben.</li>
+        <li><b>Ausprobieren statt gruebeln</b> - schnuppern, Praktikum, kleiner Job. Echtes Tun schlaegt jede Theorie.</li>
+        <li><b>Insider fragen</b> - triff jemanden, der den Job macht: "Was liebst du daran, was nervt dich?"</li>
+        <li><b>Selbst bauen</b> - ein eigenes Mini-Projekt starten UND zu Ende bringen. Das Zu-Ende-bringen ist die halbe Lektion.</li>
+        <li><b>Alle 6 Monate ehrlich pruefen</b> - mehr davon oder weg davon? Berufung ist ein Pfad, kein Blitz.</li>
+      </ul>
+    </div>
+
+    <div class="berufung-block" style="border-left:3px solid var(--warn)">
+      <h4>Fuer Eltern</h4>
+      Dein Job ist nicht, den Weg zu kennen - sondern Versuche zu ermoeglichen und sie nicht zu bewerten. Finanzier das Schnuppern, nicht die Angst. Frag <b>"Was hat sich gut angefuehlt?"</b> statt "Was bringt das spaeter?". Druck und Dauer-Bewertung toeten den Flow, den dein Kind braucht, um sich zu zeigen.
+    </div>
+
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">Merksatz: Such nicht den perfekten Plan. Sammle Erfahrungen, bis das Muster sichtbar wird. Die Richtung entsteht im Gehen.</div>
+    <button class="bigbtn ghost" style="margin-top:14px" onclick="toggleBerufung()">Schliessen</button>
   </div>
 
   <footer>Berufs-Kompass 2026 - Berufe und Mangelberuf-Status nach Fachkraefteverordnung AT 2026. Frei teilbar - laeuft offline in jedem Browser.</footer>
@@ -331,9 +402,10 @@ function updateProg(){
   var done=dq+dw;
   document.getElementById("barfill").style.width=(done/need*100)+"%";
   document.getElementById("progtxt").textContent=done+" von "+need+" beantwortet"+(done<need?"":" - bereit!");
-  document.getElementById("showResult").disabled = done<need;
+  document.getElementById("showResult").disabled = false;
 }
 function showResult(){
+  if(!validateComplete()) return;
   var scores={menschen:0,bildung:0,logik:0,technik:0,kreativ:0,wirtschaft:0,natur:0};
   Q.forEach(function(q,i){ scores[q[1]] += (answers[i]||0); });
   var ranked=Object.keys(scores).sort(function(a,b){return scores[b]-scores[a];});
@@ -377,6 +449,29 @@ function showResult(){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function toggleParent(){ document.getElementById("parent").classList.toggle("hidden"); }
+function toggleBerufung(){ var b=document.getElementById("berufung"); b.classList.toggle("hidden"); if(!b.classList.contains("hidden")) b.scrollIntoView({behavior:"smooth",block:"start"}); }
+function validateComplete(){
+  document.querySelectorAll(".q.missing").forEach(function(e){e.classList.remove("missing");});
+  var missQ=[], missW=[];
+  Q.forEach(function(q,i){ if(answers[i]===null){ missQ.push(i+1); var el=document.getElementById("q"+i); if(el) el.classList.add("missing"); }});
+  WS.forEach(function(w,i){ if(ws[i]===null){ missW.push(i); var el=document.getElementById("w"+i); if(el) el.classList.add("missing"); }});
+  var banner=document.getElementById("missingBanner");
+  if(missQ.length || missW.length){
+    var parts=[];
+    if(missQ.length) parts.push("<b>"+missQ.length+"</b> Interessens-Frage"+(missQ.length>1?"n":"")+" (Nr. "+missQ.join(", ")+")");
+    if(missW.length) parts.push("<b>"+missW.length+"</b> Arbeitsstil-Frage"+(missW.length>1?"n":""));
+    banner.innerHTML="<b>Fast geschafft!</b> Es fehlt noch: "+parts.join(" und ")+". <i>(Teil 3 ist freiwillig.)</i> <button class=\"linkbtn\" onclick=\"jumpToFirstMissing()\">Zur ersten offenen Frage springen</button>";
+    banner.classList.remove("hidden");
+    banner.scrollIntoView({behavior:"smooth",block:"center"});
+    return false;
+  }
+  banner.classList.add("hidden");
+  return true;
+}
+function jumpToFirstMissing(){
+  var el=document.querySelector(".q.missing");
+  if(el){ el.scrollIntoView({behavior:"smooth",block:"center"}); }
+}
 </script>
 </body>
 </html>
