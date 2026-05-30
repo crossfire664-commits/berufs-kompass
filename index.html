@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berufs-Kompass</title>
+<style>
+  :root{
+    --bg:#0f1419; --card:#1a2230; --card2:#222c3d; --txt:#e8edf4; --muted:#9aa7ba;
+    --acc:#4dd0a7; --acc2:#5b9dff; --warn:#ffb454; --line:#2c3850;
+    --c1:#ff6b8a; --c2:#ffb454; --c3:#5b9dff; --c4:#4dd0a7; --c5:#c084fc; --c6:#67e8f9; --c7:#a3e635;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;padding:0 16px 90px}
+  .wrap{max-width:780px;margin:0 auto}
+  header{padding:34px 0 16px;text-align:center}
+  h1{font-size:30px;letter-spacing:-.5px}
+  .sub{color:var(--muted);margin-top:8px;font-size:15px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0}
+  .secthead{margin:26px 0 4px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);font-weight:700}
+  .secsub{color:var(--muted);font-size:14px;margin-bottom:6px}
+  label.fld{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input[type=text]{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--txt);font-size:16px}
+  .intro ul{margin:10px 0 0 18px;color:var(--muted);font-size:14px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0}
+  .qtxt{font-size:16px;margin-bottom:14px;font-weight:600}
+  .qnum{color:var(--acc);font-weight:700;margin-right:8px}
+  .scale{display:flex;gap:8px;flex-wrap:wrap}
+  .scale button,.opts button{flex:1;min-width:90px;padding:11px 8px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--muted);cursor:pointer;font-size:13px;transition:.12s}
+  .scale button:hover,.opts button:hover,.chip:hover{border-color:var(--acc2)}
+  .scale button.sel,.opts button.sel{background:var(--acc);color:#0a0f16;border-color:var(--acc);font-weight:700}
+  .opts{display:flex;gap:8px;flex-wrap:wrap}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:10px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card2);color:var(--muted);cursor:pointer;font-size:14px;transition:.12s}
+  .chip.sel{background:var(--acc2);color:#0a0f16;border-color:var(--acc2);font-weight:700}
+  .bigbtn{display:block;width:100%;padding:16px;border:none;border-radius:12px;background:var(--acc);color:#0a0f16;font-size:17px;font-weight:700;cursor:pointer;margin-top:8px}
+  .bigbtn:disabled{opacity:.4;cursor:not-allowed}
+  .ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
+  .prog{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+  .bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:.3s}
+  .progtxt{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+  .hidden{display:none}
+  .res-cluster{border-radius:14px;padding:18px;margin:14px 0;border:1px solid var(--line);background:var(--card)}
+  .res-cluster h3{font-size:20px;display:flex;align-items:center;gap:10px}
+  .dot{width:14px;height:14px;border-radius:50%;display:inline-block}
+  .score-pill{margin-left:auto;font-size:13px;color:var(--muted);font-weight:600}
+  .res-cluster .role{margin-top:6px;color:var(--muted);font-size:14px}
+  .jobs{margin-top:12px;display:grid;gap:8px}
+  .job{background:var(--card2);border-radius:10px;padding:10px 12px;font-size:14px}
+  .job b{color:var(--txt)}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;margin-left:6px;font-weight:700;vertical-align:middle}
+  .tag.mb{background:rgba(77,208,167,.18);color:var(--acc)}
+  .tag.ki{background:rgba(91,157,255,.18);color:var(--acc2)}
+  .tag.kiw{background:rgba(255,180,84,.18);color:var(--warn)}
+  .path{margin-top:10px;font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+  .path b{color:var(--txt)}
+  .legend{font-size:12px;color:var(--muted);margin:8px 0 0}
+  .legend span{margin-right:14px}
+  .infobox{background:var(--card2);border-left:3px solid var(--acc2);border-radius:8px;padding:14px;margin:12px 0;font-size:14px}
+  .infobox h4{font-size:15px;margin-bottom:6px}
+  .infobox ul{margin:6px 0 0 18px;color:var(--muted)}
+  .stylegrid{display:grid;gap:8px;margin-top:10px}
+  .stylerow{display:flex;justify-content:space-between;gap:12px;background:var(--card2);border-radius:8px;padding:8px 12px;font-size:14px}
+  .stylerow b{color:var(--txt)}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+  .topclusters{font-size:14px;color:var(--muted);margin-bottom:6px}
+  .linkbtn{background:none;border:none;color:var(--acc2);text-decoration:underline;cursor:pointer;font-size:14px}
+  @media print{
+    body{background:#fff;color:#000;padding:0}
+    .panel,.q,.res-cluster,.job,.infobox,.stylerow{border-color:#bbb;background:#fff}
+    .prog,.bigbtn,.scale,.opts,.chips{display:none}
+    .res-cluster h3,.job b,.path b,.infobox h4{color:#000}
+    #parent{display:block!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Berufs-Kompass</h1>
+    <div class="sub">Finde heraus, was zu dir passt und was du daraus alles werden kannst.<br>Fuer Oesterreich, Stand 2026.</div>
+  </header>
+
+  <div id="start" class="panel intro">
+    <label class="fld">Wie heisst du?</label>
+    <input type="text" id="name" placeholder="Dein Vorname">
+    <div style="margin-top:16px;font-size:14px">So funktioniert es in 3 kurzen Teilen:</div>
+    <ul>
+      <li><b>Teil 1 - Interessen:</b> 28 Aussagen, wie sehr sie auf dich zutreffen.</li>
+      <li><b>Teil 2 - Arbeitsstil:</b> 6 Fragen, wie du am liebsten arbeitest.</li>
+      <li><b>Teil 3 - Was dir wichtig ist:</b> waehle deine Top-Werte.</li>
+    </ul>
+    <div style="margin-top:10px;font-size:14px;color:var(--muted)">Kein richtig oder falsch. Antworte ehrlich. Dauert etwa 7 Minuten.</div>
+    <button class="bigbtn" style="margin-top:18px" onclick="startQuiz()">Los geht es</button>
+    <button class="linkbtn" style="display:block;margin:14px auto 0" onclick="toggleParent()">Info fuer Eltern</button>
+  </div>
+
+  <div id="quiz" class="hidden">
+    <div class="prog">
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="progtxt" id="progtxt"></div>
+    </div>
+    <div class="secthead">Teil 1 - Deine Interessen</div>
+    <div class="secsub">Wie sehr trifft das auf dich zu?</div>
+    <div id="questions"></div>
+    <div class="secthead">Teil 2 - Dein Arbeitsstil</div>
+    <div class="secsub">Waehle, was dir mehr entspricht.</div>
+    <div id="workstyle"></div>
+    <div class="secthead">Teil 3 - Was dir wichtig ist</div>
+    <div class="secsub">Waehle bis zu 3 - was dir bei einem Beruf am meisten zaehlt.</div>
+    <div class="panel"><div class="chips" id="values"></div></div>
+    <button class="bigbtn" id="showResult" disabled onclick="showResult()">Mein Ergebnis anzeigen</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="panel">
+      <div class="topclusters" id="hello"></div>
+      <div style="font-size:15px">Deine drei staerksten Richtungen sind farbig markiert. Darunter echte Berufe - mit Job-Sicherheit in Oesterreich.</div>
+      <div class="legend">
+        <span><span class="tag mb">Mangelberuf</span> = AT sucht dringend (sicherer Job)</span>
+        <span><span class="tag ki">KI-sicher</span> = schwer durch Computer ersetzbar</span>
+        <span><span class="tag kiw">KI-Wandel</span> = veraendert sich stark, KI als Werkzeug lernen</span>
+      </div>
+    </div>
+    <div id="clusters"></div>
+    <div class="panel">
+      <h3 style="font-size:18px;margin-bottom:4px">Dein Arbeitsstil</h3>
+      <div class="secsub">Das grenzt aus den Berufen oben die passenden ein.</div>
+      <div class="stylegrid" id="styleResult"></div>
+    </div>
+    <div class="panel" id="valuesPanel">
+      <h3 style="font-size:18px;margin-bottom:4px">Was dir wichtig ist</h3>
+      <div class="stylegrid" id="valuesResult"></div>
+    </div>
+    <div class="panel infobox">
+      <h4>Wichtig: Das ist erst der Anfang</h4>
+      Dieser Test zeigt dein <b>Interesse</b> - nicht automatisch, worin du am staerksten bist. Drei naechste Schritte:
+      <ul>
+        <li><b>Schnuppern:</b> Tag der offenen Tuer + ein paar Tage in einem echten Betrieb.</li>
+        <li><b>Gegencheck:</b> kostenloser AMS-Test auf <b>bic.at</b>.</li>
+        <li><b>Reinschauen:</b> auch in eine Richtung, die nur knapp nicht in den Top 3 ist.</li>
+      </ul>
+    </div>
+    <div class="panel" style="text-align:center">
+      <button class="bigbtn" onclick="window.print()">Ergebnis speichern / drucken (PDF)</button>
+      <button class="bigbtn ghost" style="margin-top:10px" onclick="location.reload()">Nochmal starten</button>
+      <button class="linkbtn" style="display:block;margin:14px auto 0" onclick="toggleParent()">Info fuer Eltern</button>
+    </div>
+  </div>
+
+  <div id="parent" class="panel hidden" style="border-color:var(--warn)">
+    <h3 style="font-size:20px;margin-bottom:8px">Fuer Eltern - Begleitseite</h3>
+    <div class="infobox"><h4>1. Reden, nicht entscheiden</h4>Frag nicht "Was willst du werden?", sondern <b>"Bei welcher Taetigkeit vergisst du die Zeit?"</b> Wer selbst zur Erkenntnis kommt, verteidigt sie. Das Ergebnis ist ein Gespraechsanlass, kein Urteil.</div>
+    <div class="infobox"><h4>2. Schnuppern organisieren</h4><ul><li>Berufspraktische Tage ueber die Schule (1-5 Tage im Betrieb).</li><li>Tag der offenen Tuer an HTL / HLSP / BAfEP / HAK - meist Herbst und Jaenner.</li><li>Ferialpraktikum in den Sommerferien.</li><li>Girls Day fuer technische Berufe (jaehrlich, AT-weit).</li></ul></div>
+    <div class="infobox"><h4>3. Gegencheck mit offiziellen Tools</h4><ul><li>bic.at - Berufsinteressen-Test der WKO (gratis).</li><li>AMS-Berufskompass auf arbeitszimmer.cc / ams.at.</li><li>AMS-BIS zeigt live, ob ein Beruf Mangelberuf ist.</li></ul></div>
+    <div class="infobox"><h4>4. Den Maedchen-Filter aushebeln</h4>Maedchen sortieren Technik/Handwerk oft frueh unbewusst aus - nicht wegen fehlender Eignung. Wenn Technik oder Logik stark sind: ernst nehmen. Foerderprogramm FiT (Frauen in Technik) nutzen.</div>
+    <div class="infobox"><h4>5. Zeitplan</h4><ul><li>Jetzt: Ergebnisse besprechen, 2-3 Richtungen waehlen.</li><li>Herbst: Tage der offenen Tuer besuchen.</li><li>Nov-Feb: Anmeldefristen der Schulen (HTL teils mit Aufnahmeverfahren).</li><li>Fallback: Lehre mit Matura - verbaut keine spaetere akademische Option.</li></ul></div>
+    <div style="font-size:13px;color:var(--muted)">Kein Ersatz fuer AMS-Berufsberatung (kostenlos) - aber ein starker erster Schritt.</div>
+    <button class="bigbtn ghost" style="margin-top:14px" onclick="toggleParent()">Schliessen</button>
+  </div>
+
+  <footer>Berufs-Kompass 2026 - Berufe und Mangelberuf-Status nach Fachkraefteverordnung AT 2026. Frei teilbar - laeuft offline in jedem Browser.</footer>
+</div>
+<script>
+var CL = {
+  menschen:{name:"Menschen & Gesundheit", color:"var(--c1)", role:"Du willst Menschen helfen, heilen, betreuen - Naehe und Wirkung sind dir wichtig.",
+    jobs:[
+      {t:"Pflegefachassistenz / Dipl. Gesundheits- & Krankenpflege", mb:1, ki:1, d:"Patienten versorgen, Behandlung mitplanen, Angehoerige beraten."},
+      {t:"Physiotherapie / Ergotherapie / Logopaedie", mb:1, ki:1, d:"Menschen nach Unfall oder OP wieder fit machen, Sprache und Bewegung trainieren."},
+      {t:"Hebamme / Rettungssanitaeterin", mb:0, ki:1, d:"Geburtshilfe, Notfallversorgung - Verantwortung am Menschen."},
+      {t:"Klinische Psychologin / Psychotherapeutin", mb:1, ki:1, d:"Seelische Gesundheit, Gespraeche, Diagnostik."}
+    ],
+    path:"<b>Weg ab 14:</b> HLSP (Pflege + Matura, 5 J) - Pflege mit Matura - spaeter FH (DGKP, Physio, Hebamme) oder Uni (Psychologie)."},
+  bildung:{name:"Kinder & Bildung", color:"var(--c2)", role:"Du erklaerst gern, bist geduldig und magst es, andere weiterzubringen.",
+    jobs:[
+      {t:"Elementarpaedagogin (Kindergarten)", mb:1, ki:1, d:"Kinder 0-6 Jahre foerdern, sozial und kognitiv. Akademisch anerkannt."},
+      {t:"Lehrerin (Volksschule / Sekundarstufe)", mb:0, ki:1, d:"Wissen vermitteln, begleiten, motivieren."},
+      {t:"Sozialpaedagogin / Sozialarbeiterin", mb:0, ki:1, d:"Menschen in schwierigen Lagen begleiten und staerken."},
+      {t:"Freizeit- / Lernbegleiterin, Inklusionsassistenz", mb:0, ki:1, d:"Kinder und Jugendliche im Alltag unterstuetzen."}
+    ],
+    path:"<b>Weg ab 14:</b> BAfEP (Elementarpaedagogik + Matura, 5 J) - HLW - spaeter FH Soziale Arbeit oder Uni Lehramt."},
+  logik:{name:"Logik & IT", color:"var(--c3)", role:"Du loest gern Raetsel, denkst in Systemen und arbeitest lieber an der Sache als staendig mit vielen Menschen.",
+    jobs:[
+      {t:"Cybersecurity-Spezialistin (IT-Sicherheit)", mb:1, ki:1, d:"Systeme vor Angriffen schuetzen. In AT extrem gesucht (71% des IT-Mangels)."},
+      {t:"Data Scientist / Datenanalystin", mb:1, ki:1, d:"Aus Daten Muster und Entscheidungen ableiten."},
+      {t:"Softwareentwicklerin / KI-Entwicklerin", mb:1, ki:0, d:"Programme und KI-Systeme bauen. Tipp: KI als Werkzeug beherrschen, nicht nur Code tippen."},
+      {t:"IT-System- & Netzwerktechnikerin", mb:1, ki:1, d:"Netzwerke, Server, Cloud am Laufen halten."}
+    ],
+    path:"<b>Weg ab 14:</b> HTL Informatik / Technische Informatik (5 J + Matura) - Lehre Applikationsentwicklung-Coding - spaeter FH Informatik / Data Science / IT-Security."},
+  technik:{name:"Technik & Bauen", color:"var(--c4)", role:"Du willst verstehen, wie Dinge funktionieren - Haende UND Kopf, etwas Greifbares schaffen.",
+    jobs:[
+      {t:"Mechatronikerin (Technik + Elektronik + IT)", mb:1, ki:1, d:"Automatisierte Maschinen und Roboter bauen und warten. Top-Mangelberuf."},
+      {t:"Elektrotechnikerin / Automatisierungstechnik (SPS)", mb:1, ki:1, d:"Maschinen steuern, Anlagen programmieren."},
+      {t:"Technikerin Erneuerbare Energie / Photovoltaik", mb:1, ki:1, d:"Solar, Waermepumpen, Energiewende - Zukunftsmarkt."},
+      {t:"Metalltechnik / Konstruktion / CAD", mb:1, ki:1, d:"Bauteile entwerfen und fertigen, am Computer und an der Maschine."}
+    ],
+    path:"<b>Weg ab 14:</b> HTL Mechatronik / Elektronik (5 J + Matura, Ing.-Titel) - Lehre Mechatronik/Elektrotechnik - spaeter FH Technik. Foerderung: FiT (Frauen in Technik)."},
+  kreativ:{name:"Gestalten & Kreativ", color:"var(--c5)", role:"Du hast Ideen, gestaltest gern, denkst in Bildern, Formen oder Geschichten.",
+    jobs:[
+      {t:"Mediendesign / UX-UI-Designerin", mb:0, ki:2, d:"Apps und Websites so gestalten, dass sie schoen und einfach sind."},
+      {t:"Grafik / Game-Art / 3D / Animation", mb:0, ki:2, d:"Visuelles erschaffen. KI veraendert das stark - wer KI als Werkzeug nutzt, gewinnt."},
+      {t:"Architektur / Innenarchitektur", mb:0, ki:1, d:"Raeume und Gebaeude entwerfen - Technik und Aesthetik."},
+      {t:"Content / Social Media / Marketing-Gestaltung", mb:0, ki:2, d:"Kampagnen und Inhalte gestalten."}
+    ],
+    path:"<b>Weg ab 14:</b> HTL Grafik / Medien / Design - Kunstschule (z.B. Ortweinschule Graz) - spaeter FH Design / Architektur. Wichtig: KI-Tools frueh lernen."},
+  wirtschaft:{name:"Organisieren & Wirtschaft", color:"var(--c6)", role:"Du planst gern, behaeltst den Ueberblick, magst Zahlen, Geld oder das Fuehren und Verkaufen.",
+    jobs:[
+      {t:"Personal- / Lohnverrechnung, Steuer-Assistenz", mb:1, ki:1, d:"Gehaelter, Abrechnung, Steuer - verlaesslich gesucht."},
+      {t:"Logistik- & Supply-Chain-Managerin", mb:0, ki:1, d:"Warenstroeme planen und steuern."},
+      {t:"Projektmanagerin / Unternehmerin (eigenes Gewerbe)", mb:0, ki:1, d:"Eigenes Business aufbauen - wie ein Maker-Betrieb."},
+      {t:"Wirtschaft / Controlling / Bank und Versicherung", mb:0, ki:1, d:"Zahlen analysieren, Entscheidungen vorbereiten."}
+    ],
+    path:"<b>Weg ab 14:</b> HAK (Wirtschaft + Matura, 5 J) - HLW - Lehre Buerokauffrau / Steuerassistenz - spaeter FH Wirtschaft / Gruendung."},
+  natur:{name:"Natur, Tiere & Koerper", color:"var(--c7)", role:"Du bist gern draussen, in Bewegung, mit Tieren oder Pflanzen - nicht den ganzen Tag am Schreibtisch.",
+    jobs:[
+      {t:"Tierpflege / Tieraerztliche Assistenz", mb:0, ki:1, d:"Tiere versorgen, betreuen, in Praxis/Tierheim/Zoo arbeiten."},
+      {t:"Sport- / Trainingstherapie / Physiotherapie", mb:1, ki:1, d:"Bewegung, Reha, Fitness - Koerper als Beruf."},
+      {t:"Land- / Forstwirtschaft & Landmaschinentechnik", mb:1, ki:1, d:"Lebensmittel und Wald, moderne Technik. Landmaschinenbau = Top-Mangelberuf."},
+      {t:"Gaertnerei / Floristik / Landschaftsgestaltung", mb:0, ki:1, d:"Mit Pflanzen gestalten, drinnen wie draussen."}
+    ],
+    path:"<b>Weg ab 14:</b> HBLA fuer Land- und Forstwirtschaft / Gartenbau (5 J + Matura) - Lehre Tierpflege / Gaertnerin / Forstfacharbeiterin - spaeter FH Sportwissenschaft / Agrar oder Uni Tiermedizin."}
+};
+var Q = [
+  ["Ich kuemmere mich gern um Menschen, denen es nicht gut geht.","menschen"],
+  ["Es macht mir Spass, jemandem etwas geduldig zu erklaeren, bis er es kann.","bildung"],
+  ["Ich tueftle gern an einem kniffligen Problem, bis die Loesung passt.","logik"],
+  ["Ich finde heraus, warum ein Geraet kaputt ist, und repariere es gern selbst.","technik"],
+  ["Ich gestalte, zeichne oder bastle gern etwas Eigenes.","kreativ"],
+  ["Ich plane gern und behalte auch bei vielen Dingen den Ueberblick.","wirtschaft"],
+  ["Ich bin lieber draussen in der Natur als drinnen.","natur"],
+  ["Wenn jemand traurig ist, merke ich das schnell und will helfen.","menschen"],
+  ["Mit kleinen Kindern umzugehen, faellt mir leicht und macht Freude.","bildung"],
+  ["Ich liebe Raetsel, Logik-Spiele oder das Knacken von Codes.","logik"],
+  ["Ich arbeite gern mit Maschinen, Werkzeug, Strom oder Robotern.","technik"],
+  ["Ich habe oft Ideen, wie man etwas schoener oder cooler machen koennte.","kreativ"],
+  ["Ich rechne gern und interessiere mich dafuer, wie man mit Geld umgeht.","wirtschaft"],
+  ["Der Umgang mit Tieren macht mir Freude.","natur"],
+  ["Ich kann mir gut vorstellen, in einem Krankenhaus oder einer Praxis zu arbeiten.","menschen"],
+  ["Ich begleite gern andere und freue mich, wenn sie Fortschritte machen.","bildung"],
+  ["Ich wuerde gern verstehen, wie Computer, Apps oder KI wirklich funktionieren.","logik"],
+  ["Etwas mit den Haenden zu bauen, das danach funktioniert, finde ich super.","technik"],
+  ["Ich druecke mich gern ueber Bilder, Videos, Musik oder Design aus.","kreativ"],
+  ["Ich uebernehme in Gruppen oft die Organisation oder Leitung.","wirtschaft"],
+  ["Sport, Bewegung und wie der Koerper funktioniert, interessieren mich.","natur"],
+  ["Geduld mit Menschen zu haben, faellt mir leichter als anderen.","menschen"],
+  ["Ich erklaere Freunden gern den Schulstoff, wenn sie ihn nicht verstehen.","bildung"],
+  ["Ich kann mich lange allein auf eine knifflige Aufgabe konzentrieren.","logik"],
+  ["Technik, Autos, Elektronik oder erneuerbare Energie interessieren mich.","technik"],
+  ["Ein leeres Blatt oder ein Design-Programm reizt mich, etwas zu erschaffen.","kreativ"],
+  ["Ich traeume manchmal davon, ein eigenes Geschaeft oder Projekt zu fuehren.","wirtschaft"],
+  ["Mit Pflanzen, Garten oder in der Landwirtschaft zu arbeiten, kann ich mir gut vorstellen.","natur"]
+];
+var SCALE = ["gar nicht","eher nicht","eher schon","voll"];
+var WS = [
+  ["Wo arbeitest du lieber?", ["drinnen","draussen","gemischt"]],
+  ["Lieber...", ["fuer mich allein","im Team","gemischt"]],
+  ["Was liegt dir mehr?", ["praktisch anpacken","am Computer / denken","beides"]],
+  ["Welcher Tagesablauf?", ["geregelte Zeiten","flexibel & abwechslungsreich","egal"]],
+  ["Kontakt mit fremden Menschen?", ["viel, macht mir Spass","wenig, lieber konzentriert","mittel"]],
+  ["Schule oder schnell ins Berufsleben?", ["will spaeter studieren","lieber Lehre/Praxis","weiss noch nicht"]]
+];
+var VALS = ["Sicherer Job","Gutes Geld","Etwas Sinnvolles tun","Anderen helfen","Freiheit / eigenes Ding","Kreativ sein","Abwechslung","Aufstieg / Karriere"];
+var VAL_HINT = {
+  "Sicherer Job":"Schau auf die gruen markierten Mangelberufe - die sind in AT am sichersten.",
+  "Gutes Geld":"Technik/IT + Weiterbildung (Ing./FH) zahlen am besten. Lohn steigt mit jeder Qualifikation.",
+  "Etwas Sinnvolles tun":"Gesundheit, Pflege, Bildung, Umwelt/Energie geben ein starkes Sinn-Gefuehl.",
+  "Anderen helfen":"Menschen- und Gesundheitsberufe - und sie sind KI-sicher.",
+  "Freiheit / eigenes Ding":"Handwerk/Technik + Meister = eigenes Gewerbe moeglich. Unternehmerin werden.",
+  "Kreativ sein":"Design/Medien/Architektur - aber KI-Tools frueh lernen (Sicherheits-Faktor).",
+  "Abwechslung":"Berufe mit wechselnden Orten/Aufgaben: Technik im Aussendienst, Gesundheit, Selbststaendigkeit.",
+  "Aufstieg / Karriere":"Mit Matura (BHS) bleiben alle Tueren offen - Techniker zu Ing. zu FH, oder Pflege zu Stationsleitung."
+};
+var answers = new Array(Q.length).fill(null);
+var ws = new Array(WS.length).fill(null);
+var vals = [];
+function startQuiz(){
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("parent").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  var box=document.getElementById("questions");
+  Q.forEach(function(q,i){
+    var div=document.createElement("div");
+    div.className="q"; div.id="q"+i;
+    var btns="";
+    SCALE.forEach(function(s,v){btns+='<button onclick="answer('+i+','+v+',this)">'+s+'</button>';});
+    div.innerHTML='<div class="qtxt"><span class="qnum">'+(i+1)+'</span>'+q[0]+'</div><div class="scale">'+btns+'</div>';
+    box.appendChild(div);
+  });
+  var wbox=document.getElementById("workstyle");
+  WS.forEach(function(w,i){
+    var div=document.createElement("div");
+    div.className="q"; div.id="w"+i;
+    var btns="";
+    w[1].forEach(function(o,v){btns+='<button onclick="answerWs('+i+','+v+',this)">'+o+'</button>';});
+    div.innerHTML='<div class="qtxt">'+w[0]+'</div><div class="opts">'+btns+'</div>';
+    wbox.appendChild(div);
+  });
+  var vbox=document.getElementById("values");
+  VALS.forEach(function(v,i){
+    var c=document.createElement("div");
+    c.className="chip"; c.textContent=v;
+    c.onclick=function(){toggleVal(i,c);};
+    vbox.appendChild(c);
+  });
+  updateProg();
+}
+function answer(i,v,el){
+  answers[i]=v;
+  el.parentNode.querySelectorAll("button").forEach(function(b){b.classList.remove("sel");});
+  el.classList.add("sel");
+  updateProg();
+  var next=document.getElementById("q"+(i+1));
+  if(next) next.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function answerWs(i,v,el){
+  ws[i]=v;
+  el.parentNode.querySelectorAll("button").forEach(function(b){b.classList.remove("sel");});
+  el.classList.add("sel");
+  updateProg();
+}
+function toggleVal(i,el){
+  var idx=vals.indexOf(i);
+  if(idx>=0){vals.splice(idx,1);el.classList.remove("sel");}
+  else{ if(vals.length>=3) return; vals.push(i); el.classList.add("sel"); }
+}
+function updateProg(){
+  var dq=answers.filter(function(a){return a!==null;}).length;
+  var dw=ws.filter(function(a){return a!==null;}).length;
+  var need=Q.length+WS.length;
+  var done=dq+dw;
+  document.getElementById("barfill").style.width=(done/need*100)+"%";
+  document.getElementById("progtxt").textContent=done+" von "+need+" beantwortet"+(done<need?"":" - bereit!");
+  document.getElementById("showResult").disabled = done<need;
+}
+function showResult(){
+  var scores={menschen:0,bildung:0,logik:0,technik:0,kreativ:0,wirtschaft:0,natur:0};
+  Q.forEach(function(q,i){ scores[q[1]] += (answers[i]||0); });
+  var ranked=Object.keys(scores).sort(function(a,b){return scores[b]-scores[a];});
+  var maxScore=12;
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  var name=(document.getElementById("name").value||"").trim();
+  document.getElementById("hello").textContent = name ? (name+", das passt zu dir:") : "Das passt zu dir:";
+  var cont=document.getElementById("clusters"); cont.innerHTML="";
+  ranked.forEach(function(key,idx){
+    var c=CL[key]; var top= idx<3;
+    var pct=Math.round(scores[key]/maxScore*100);
+    var div=document.createElement("div");
+    div.className="res-cluster";
+    div.style.borderColor = top? c.color : "var(--line)";
+    div.style.opacity = top? 1 : .6;
+    var jobs="";
+    c.jobs.forEach(function(j){
+      var tags="";
+      if(j.mb) tags+='<span class="tag mb">Mangelberuf</span>';
+      if(j.ki===1) tags+='<span class="tag ki">KI-sicher</span>';
+      if(j.ki===2) tags+='<span class="tag kiw">KI-Wandel</span>';
+      jobs+='<div class="job"><b>'+j.t+'</b>'+tags+'<br><span style="color:var(--muted)">'+j.d+'</span></div>';
+    });
+    div.innerHTML='<h3><span class="dot" style="background:'+c.color+'"></span>'+(idx+1)+'. '+c.name+'<span class="score-pill">'+pct+'%</span></h3>'+
+      '<div class="role">'+c.role+'</div>'+
+      (top? ('<div class="jobs">'+jobs+'</div><div class="path">'+c.path+'</div>') : '<div class="path" style="border:none;padding-top:6px">Weniger stark - aber schau rein, wenn ein Beispiel dich neugierig macht.</div>');
+    cont.appendChild(div);
+  });
+  var sr=document.getElementById("styleResult"); sr.innerHTML="";
+  WS.forEach(function(w,i){
+    var pick = ws[i]!==null ? w[1][ws[i]] : "-";
+    sr.innerHTML+='<div class="stylerow"><span>'+w[0]+'</span><b>'+pick+'</b></div>';
+  });
+  var vr=document.getElementById("valuesResult");
+  if(vals.length===0){ document.getElementById("valuesPanel").classList.add("hidden"); }
+  else{
+    vr.innerHTML="";
+    vals.forEach(function(i){ var v=VALS[i]; vr.innerHTML+='<div class="stylerow"><span><b>'+v+'</b></span><span style="color:var(--muted);max-width:62%;text-align:right">'+VAL_HINT[v]+'</span></div>'; });
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function toggleParent(){ document.getElementById("parent").classList.toggle("hidden"); }
+</script>
+</body>
+</html>
